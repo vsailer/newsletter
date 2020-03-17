@@ -15,7 +15,7 @@ from emencia.django.newsletter.utils.workgroups import request_workgroups_contac
 from emencia.django.newsletter.utils.workgroups import request_workgroups_newsletters_pk
 from emencia.django.newsletter.utils.workgroups import request_workgroups_mailinglists_pk
 from emencia.django.newsletter.utils.newsletter import get_webpage_content
-
+from django.utils.safestring import mark_safe
 
 class AttachmentAdminInline(admin.TabularInline):
     model = Attachment
@@ -108,7 +108,7 @@ class NewsletterAdmin(admin.ModelAdmin):
     def historic_link(self, newsletter):
         """Display link for historic"""
         if newsletter.contactmailingstatus_set.count():
-            return '<a href="%s">%s</a>' % (newsletter.get_historic_url(), _('View historic'))
+            return mark_safe(f'<a href="newsletter.get_historic_url()">_("View historic")</a>')
         return _('Not available')
     historic_link.allow_tags = True
     historic_link.short_description = _('Historic')
@@ -117,7 +117,7 @@ class NewsletterAdmin(admin.ModelAdmin):
         """Display link for statistics"""
         if newsletter.status == Newsletter.SENDING or \
            newsletter.status == Newsletter.SENT:
-            return '<a href="%s">%s</a>' % (newsletter.get_statistics_url(), _('View statistics'))
+            return mark_safe(f'<a href="newsletter.get_statistics_url()">_("View statistics")</a>')
         return _('Not available')
     statistics_link.allow_tags = True
     statistics_link.short_description = _('Statistics')

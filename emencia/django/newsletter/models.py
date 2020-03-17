@@ -304,15 +304,12 @@ class Newsletter(models.Model):
     def mailing_list(self):
         return MultiMailingListWrapper(self)
 
-    @models.permalink
     def get_absolute_url(self):
         return ('newsletter_newsletter_preview', (self.slug,))
 
-    @models.permalink
     def get_historic_url(self):
         return ('newsletter_newsletter_historic', (self.slug,))
 
-    @models.permalink
     def get_statistics_url(self):
         return ('newsletter_newsletter_statistics', (self.slug,))
 
