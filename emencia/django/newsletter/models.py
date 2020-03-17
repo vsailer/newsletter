@@ -8,7 +8,7 @@ from hashids import Hashids
 from django.conf import settings
 from django.db import models
 from django.utils.encoding import smart_str
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -131,7 +131,7 @@ class Contact(models.Model):
     valid = models.BooleanField(_('valid email'), default=True)
     tester = models.BooleanField(_('contact tester'), default=False)
 
-    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    content_type = models.ForeignKey(ContentType, blank=True, null=True, on_delete=models.PROTECT)
     object_id = models.PositiveIntegerField(blank=True, null=True)
     content_object = GenericForeignKey('content_type', 'object_id')
 
@@ -284,7 +284,7 @@ class Newsletter(models.Model):
                                            blank=True)
 
     server = models.ForeignKey(SMTPServer, verbose_name=_('smtp server'),
-                               default=1)
+                               default=1, on_delete=models.PROTECT)
     header_sender = models.CharField(_('sender'), max_length=255,
                                      default=DEFAULT_HEADER_SENDER)
     header_reply = models.CharField(_('reply to'), max_length=255,
@@ -351,7 +351,7 @@ def get_newsletter_storage_path(self, filename):
 class Attachment(models.Model):
     """Attachment file in a newsletter"""
 
-    newsletter = models.ForeignKey(Newsletter, verbose_name=_('newsletter'))
+    newsletter = models.ForeignKey(Newsletter, verbose_name=_('newsletter'), on_delete=models.PROTECT)
     title = models.CharField(_('title'), max_length=255)
     file_attachment = models.FileField(_('file to attach'),
                                        upload_to=get_newsletter_storage_path)
@@ -388,11 +388,11 @@ class ContactMailingStatus(models.Model):
                       (UNSUBSCRIPTION, _('unsubscription')),
                       )
 
-    newsletter = models.ForeignKey(Newsletter, verbose_name=_('newsletter'))
-    contact = models.ForeignKey(Contact, verbose_name=_('contact'))
+    newsletter = models.ForeignKey(Newsletter, verbose_name=_('newsletter'), on_delete=models.PROTECT)
+    contact = models.ForeignKey(Contact, verbose_name=_('contact'), on_delete=models.PROTECT)
     status = models.IntegerField(_('status'), choices=STATUS_CHOICES)
     link = models.ForeignKey(Link, verbose_name=_('link'),
-                             blank=True, null=True)
+                             blank=True, null=True, on_delete=models.PROTECT)
 
     creation_date = models.DateTimeField(_('creation date'), auto_now_add=True)
 
@@ -409,7 +409,7 @@ class ContactMailingStatus(models.Model):
 class WorkGroup(models.Model):
     """Work Group for privatization of the ressources"""
     name = models.CharField(_('name'), max_length=255)
-    group = models.ForeignKey(Group, verbose_name=_('permissions group'))
+    group = models.ForeignKey(Group, verbose_name=_('permissions group'), on_delete=models.PROTECT)
 
     contacts = models.ManyToManyField(Contact, verbose_name=_('contacts'),
                                       blank=True)

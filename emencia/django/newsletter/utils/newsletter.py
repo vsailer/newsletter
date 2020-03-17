@@ -2,7 +2,7 @@
 import urllib.request, urllib.error, urllib.parse
 
 from bs4 import BeautifulSoup, Tag
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from emencia.django.newsletter.models import Link
 
