@@ -1,13 +1,12 @@
 from setuptools import setup, find_packages
 import os
 
-version = '3.0.maisen-dev4'
+version = '4.0'
 
 setup(name='emencia.django.newsletter',
       version=version,
       description="A Django app for sending newsletter by email to a contact list.",
-      long_description=open("README.rst").read() + "\n" +
-                       open(os.path.join("docs", "HISTORY.txt")).read(),
+      long_description="Django Newsletter App",
       keywords='django, newsletter, mailing',
       classifiers=[
           'Intended Audience :: Developers',
