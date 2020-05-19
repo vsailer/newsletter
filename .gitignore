@@ -1,0 +1,13 @@
+.vagrant/
+.vscode/
+/static/CACHE/
+/media
+*.egg-info
+*.pyc
+*.sql.gz
+*.sql
+__pycache__
+settings/local.py
+struktiv/settings/development.py
+struktiv/settings/production.py
+manage.py

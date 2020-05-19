@@ -305,13 +305,13 @@ class Newsletter(models.Model):
         return MultiMailingListWrapper(self)
 
     def get_absolute_url(self):
-        return ('newsletter_newsletter_preview', (self.slug,))
+        return reverse('newsletter_newsletter_preview', args=(self.slug,))
 
     def get_historic_url(self):
-        return ('newsletter_newsletter_historic', (self.slug,))
+        return reverse('newsletter_newsletter_historic', args=(self.slug,))
 
     def get_statistics_url(self):
-        return ('newsletter_newsletter_statistics', (self.slug,))
+        return reverse('newsletter_newsletter_statistics', args=(self.slug,))
 
     def __str__(self):
         return self.title
